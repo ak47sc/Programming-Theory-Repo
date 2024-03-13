@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _indicator: {fileID: 642549112}
   _driveButton: {fileID: 502355542}
+  _driveText: {fileID: 174976026}
   indicatorPosition: 5
 --- !u!4 &10190396
 Transform:

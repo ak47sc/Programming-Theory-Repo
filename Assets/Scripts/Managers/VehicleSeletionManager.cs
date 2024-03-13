@@ -6,6 +6,7 @@ public class VehicleSeletionManager : MonoBehaviour
 {
     [SerializeField]private Transform _indicator;
     [SerializeField]private GameObject _driveButton;
+    [SerializeField]private GameObject _driveText;
     [SerializeField]private float indicatorPosition;
 
     private Transform currentSelectedVehicle;
@@ -36,6 +37,7 @@ public class VehicleSeletionManager : MonoBehaviour
         _indicator.gameObject.SetActive(false);
         button.SetActive(false);
         isSelected = true;
+        _driveText.SetActive(false);
     }
 
     public void Restart(){
