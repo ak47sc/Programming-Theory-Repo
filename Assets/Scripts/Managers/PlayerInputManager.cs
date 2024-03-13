@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {
+    public static PlayerInputManager Instance{get;private set;}
     [SerializeField]private Vehicles vehicle;
     private const string HORIZONTAL_AXIS = "Horizontal";
     private const string VERTICLE_AXIS = "Vertical";
 
     float horizontalInput;
     float verticleInput;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    void Awake(){
+        if(Instance != null){
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    } 
 
     // Update is called once per frame
     void Update()
@@ -23,5 +26,9 @@ public class PlayerInputManager : MonoBehaviour
         //ABSTRACTION & POLYMORPHISM
         vehicle.Move(verticleInput);
         vehicle.Turn(horizontalInput);
+    }
+
+    public void SetCurrentVehicle(Vehicles vehicle){
+        this.vehicle = vehicle;
     }
 }
