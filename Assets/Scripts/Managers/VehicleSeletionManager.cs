@@ -1,13 +1,18 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class VehicleSeletionManager : MonoBehaviour
 {
-    [SerializeField]private Transform indicator;
+    [SerializeField]private Transform _indicator;
+    [SerializeField]private GameObject _driveButton;
     [SerializeField]private float indicatorPosition;
 
     private Transform currentSelectedVehicle;
+    private bool isSelected;
+
     void Update(){
-        if(Input.GetMouseButtonDown(0)){
+        if(Input.GetMouseButtonDown(0) && !isSelected){
             IndicatorPositionUpdate();
         }
     }
@@ -17,11 +22,23 @@ public class VehicleSeletionManager : MonoBehaviour
         Ray mouseToRay = Camera.main.ScreenPointToRay(mousePos);
         if(Physics.Raycast(mouseToRay , out RaycastHit hit)){
             if(hit.transform.TryGetComponent<Vehicles>(out Vehicles component)){
-                indicator.position = component.transform.position + Vector3.up * indicatorPosition;
-                indicator.gameObject.SetActive(true);
+                _indicator.position = component.transform.position + Vector3.up * indicatorPosition;
+                _indicator.gameObject.SetActive(true);
                 currentSelectedVehicle = component.transform;
                 PlayerInputManager.Instance.SetCurrentVehicle(component);
+                _driveButton.SetActive(true);
             }
         }
+    }
+
+    public void StartToDrive(GameObject button){
+        PlayerInputManager.Instance.StartToDrive();
+        _indicator.gameObject.SetActive(false);
+        button.SetActive(false);
+        isSelected = true;
+    }
+
+    public void Restart(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

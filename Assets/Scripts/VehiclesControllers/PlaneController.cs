@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlaneController : Vehicles
 {
     [SerializeField]private float forwardSpeed;
+
+    private float currentForwardSpeed;
     void Update(){
         MoveForward();
     }
@@ -10,16 +12,13 @@ public class PlaneController : Vehicles
     //POLYMORPHISM
     public override void Move(float direction)
     {
+        currentForwardSpeed = forwardSpeed; 
         transform.Rotate(speed * Time.deltaTime * direction * transform.right);
-    }
-    public override void Turn(float direction)
-    {
-        transform.Rotate(direction * Time.deltaTime * turnSpeed * Vector3.forward);
     }
 
 
     void MoveForward(){
-        transform.Translate(forwardSpeed * Time.deltaTime * Vector3.forward);
+        transform.Translate(currentForwardSpeed * Time.deltaTime * Vector3.forward);
     }
 
     public override void Damage()
